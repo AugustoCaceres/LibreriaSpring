@@ -51,7 +51,7 @@ public class LibroControlador {
     
     @GetMapping("/editar/{id}")
     public ModelAndView modificarLibro(@PathVariable String id) throws ExcepcionServicio {
-        ModelAndView mav = new ModelAndView("editorial-formulario");
+        ModelAndView mav = new ModelAndView("libro-formulario");
         mav.addObject("libro", libroServicio.obtenerLibroPorId(id));
         mav.addObject("autor", autorServicio.obtenerAutores());
         mav.addObject("editorial", editorialServicio.obtenerEditoriales());
