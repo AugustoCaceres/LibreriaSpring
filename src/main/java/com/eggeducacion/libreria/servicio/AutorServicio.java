@@ -63,13 +63,14 @@ public class AutorServicio {
     
     @Transactional(readOnly=true)
     public Autor obtenerAutorPorId(String id) throws ExcepcionServicio{
-        Optional<Autor> a = repositorio.findById(id);
-        if(a.isPresent()){
-            Autor autor = a.get();
-            return autor;
-        } else {
-            throw new ExcepcionServicio("Ese autor no se encuentra en la base de datos.");
-        }
+        return repositorio.findById(id).orElse(null);
+//        Optional<Autor> a = repositorio.findById(id);
+//        if(a.isPresent()){
+//            Autor autor = a.get();
+//            return autor;
+//        } else {
+//            throw new ExcepcionServicio("Ese autor no se encuentra en la base de datos.");
+//        }
     }
     
     private void validarDatos(String nombre) throws ExcepcionServicio {

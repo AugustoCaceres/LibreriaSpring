@@ -4,6 +4,8 @@ import com.eggeducacion.libreria.entidad.Autor;
 import com.eggeducacion.libreria.entidad.Editorial;
 import com.eggeducacion.libreria.entidad.Libro;
 import com.eggeducacion.libreria.excepcion.ExcepcionServicio;
+import com.eggeducacion.libreria.repositorio.AutorRepositorio;
+import com.eggeducacion.libreria.repositorio.EditorialRepositorio;
 import com.eggeducacion.libreria.repositorio.LibroRepositorio;
 import java.util.Calendar;
 import java.util.List;
@@ -17,17 +19,21 @@ public class LibroServicio {
     
     @Autowired
     private LibroRepositorio repositorio;
-    AutorServicio autorServicio = new AutorServicio();
-    EditorialServicio editorialServicio = new EditorialServicio();
+    
+    @Autowired
+    private AutorRepositorio autorRepositorio;
+    
+    @Autowired
+    private EditorialRepositorio editorialRepositorio;
     
     @Transactional
     public void ingresarLibro(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados, String autorId, String editorialId) throws ExcepcionServicio{
         
         validarDatos(isbn, titulo, anio, ejemplares, ejemplaresPrestados);
         
-        Autor autor = autorServicio.obtenerAutorPorId(autorId);
+        //Autor autor = autorServicio.obtenerAutorPorId(autorId); --> esto no funcionaba 
         
-        Editorial editorial = editorialServicio.obtenerEditorialPorId(autorId);
+        //Editorial editorial = editorialServicio.obtenerEditorialPorId(autorId); --> esto no funcionaba 
         
         Libro libro = new Libro();
         libro.setIsbn(isbn);
@@ -36,8 +42,8 @@ public class LibroServicio {
         libro.setEjemplares(ejemplares);
         libro.setEjemplaresPrestados(ejemplaresPrestados);
         libro.setEjemplaresRestantes(libro.getEjemplares()-libro.getEjemplaresPrestados());
-        libro.setAutor(autor);
-        libro.setEditorial(editorial);
+        libro.setAutor(autorRepositorio.findById(autorId).orElse(null)); //--> con esto se arregló lo que no funcionaba 
+        libro.setEditorial(editorialRepositorio.findById(editorialId).orElse(null)); //--> con esto se arregló lo que no funcionaba 
         libro.setAlta(true);
         repositorio.save(libro);      
     }

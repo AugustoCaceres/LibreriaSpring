@@ -42,8 +42,8 @@ public class LibroControlador {
     public ModelAndView crearLibro(){
         ModelAndView mav = new ModelAndView("libro-formulario");
         mav.addObject("libro", new Libro());
-        mav.addObject("autor", autorServicio.obtenerAutores());
-        mav.addObject("editorial", editorialServicio.obtenerEditoriales());
+        mav.addObject("autores", autorServicio.obtenerAutores()); //esto tiene que coincidir con lo que va en las llaves del th:each 
+        mav.addObject("editoriales", editorialServicio.obtenerEditoriales()); //esto lo mismo pero con las editoriales
         mav.addObject("title", "Crear libro");
         mav.addObject("action", "guardar");
         return mav;
@@ -62,13 +62,15 @@ public class LibroControlador {
     
     @PostMapping("/guardar")
     public RedirectView guardar(@RequestParam Long isbn, @RequestParam String titulo, @RequestParam Integer anio, @RequestParam Integer ejemplares, 
-            @RequestParam Integer ejemplaresPrestados, @RequestParam("autor") String autorId, @RequestParam("editorial") String editorialId)throws ExcepcionServicio{
+            @RequestParam Integer ejemplaresPrestados, @RequestParam("autor") String autorId, 
+            @RequestParam("editorial") String editorialId)throws ExcepcionServicio{
         libroServicio.ingresarLibro(isbn, titulo, anio, ejemplares, ejemplaresPrestados, autorId, editorialId);
         return new RedirectView("/libros");
     }
     
     @PostMapping("/modificar")
-    public RedirectView editar(@RequestParam String id, @RequestParam Long isbn, @RequestParam String titulo, @RequestParam Integer anio, @RequestParam Integer ejemplares,
+    public RedirectView editar(@RequestParam String id, @RequestParam Long isbn, @RequestParam String titulo, 
+            @RequestParam Integer anio, @RequestParam Integer ejemplares,
             @RequestParam Integer ejemplaresPrestados) throws ExcepcionServicio {
         libroServicio.modificarLibro(id, isbn, titulo,  anio, ejemplares, ejemplaresPrestados);
         return new RedirectView("/libros");

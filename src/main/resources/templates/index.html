@@ -11,53 +11,16 @@
     
 </head>
 <body class="bg-light">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light ps-2">
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav mr auto">
-                    <li class="nav-item ">
-                        <a class="nav-link" th:href="@{/}">Inicio</a> 
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Autores
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" th:href="@{/autores}">Mostrar autores</a></li>
-                            <li><a class="dropdown-item" th:href="@{/autores/crear}">Agregar autor</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"  role="button" 
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                            Editoriales</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" th:href="@{/editoriales}">Mostrar editoriales</a></li>
-                            <li><a class="dropdown-item" th:href="@{/editoriales/crear}">Agregar editorial</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"  role="button" 
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                            Libros</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" th:href="@{/libros}">Mostrar libros</a></li>
-                            <li><a class="dropdown-item" th:href="@{/libros/crear}">Agregar libros</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-    </nav>
+
+<nav th:replace="fragment :: navbar"></nav>
     
-    <div class="container">
-        <div class="text-center">
-            <h1>Libreria Sopa de Letras</h1>
-        </div>
+<div class="container">
+    <div class="text-center">
+        <h1>Libreria Sopa de Letras</h1>
     </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</div>
+
+<footer th:replace="fragment :: footer"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

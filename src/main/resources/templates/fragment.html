@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-light bg-light ps-2">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav mr auto">
+            <li class="nav-item ">
+                <a class="nav-link" th:href="@{/}">Inicio</a> 
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"  
+                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Autores
+                </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" th:href="@{/autores}">Mostrar autores</a></li>
+                        <li><a class="dropdown-item" th:href="@{/autores/crear}">Agregar autor</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"  
+                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Editoriales</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" th:href="@{/editoriales}">Mostrar editoriales</a></li>
+                        <li><a class="dropdown-item" th:href="@{/editoriales/crear}">Agregar editorial</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"  
+                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Libros</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" th:href="@{/libros}">Mostrar libros</a></li>
+                        <li><a class="dropdown-item" th:href="@{/libros/crear}">Agregar libros</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+</nav>
+
+<footer th:frgment="footer" class="footer py-3 bg-dark fixed-bottom">
+    <div class="container d-flex justify-content-center">
+        <span class="text-muted">&copy; Augusto Cáceres - 2021</span>
+    </div>
+</footer>
+
+</html>
