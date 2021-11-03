@@ -20,4 +20,8 @@ public interface AutorRepositorio extends JpaRepository<Autor, String> {
     @Modifying 
     @Query("UPDATE Autor a SET a.alta = :alta WHERE a.id = :id")
     void bajaAutor(@Param("id")String id, @Param("alta") boolean alta);
+    
+    @Modifying 
+    @Query("UPDATE Autor a SET a.alta = :alta WHERE a.id = :id")
+    void altaAutor(@Param("id") String id, @Param("alta") boolean alta);
 }

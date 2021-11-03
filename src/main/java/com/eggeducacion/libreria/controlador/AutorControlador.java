@@ -57,9 +57,15 @@ public class AutorControlador {
         return new RedirectView("/autores");
     }
     
-    @PostMapping("/eliminar")
-    public RedirectView eliminar(@RequestParam String id) throws ExcepcionServicio {
+    @PostMapping("/eliminar/{id}")
+    public RedirectView eliminar(@PathVariable String id) throws ExcepcionServicio {
         autorServicio.bajaAutor(id);
         return new RedirectView("/autores");
-    }    
+    }   
+    
+    @PostMapping("/habilitar/{id}")
+    public RedirectView habilitar(@PathVariable String id) throws ExcepcionServicio {
+        autorServicio.altaAutor(id);
+        return new RedirectView("/autores");
+    }
 }

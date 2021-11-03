@@ -56,6 +56,21 @@ public class AutorServicio {
         }
     }
     
+    @Transactional
+    public void altaAutor(String id) throws ExcepcionServicio {
+        Optional<Autor> a = repositorio.findById(id);
+        if (a.isPresent()){
+            Autor autor = a.get();
+            if(autor.getAlta().equals(true)){
+                throw new ExcepcionServicio("Ese autor ya estaba dado de alta.");
+            }
+            autor.setAlta(true);
+            repositorio.save(autor);
+        } else {
+            throw new ExcepcionServicio("Ese autor no se encuentra en la base de datos.");
+        }
+    }
+    
     @Transactional(readOnly=true)
     public List<Autor> obtenerAutores(){
         return repositorio.findAll();
