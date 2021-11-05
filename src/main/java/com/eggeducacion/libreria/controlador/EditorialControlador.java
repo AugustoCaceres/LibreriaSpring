@@ -57,9 +57,15 @@ public class EditorialControlador {
         return new RedirectView("/editoriales");
     }
     
-    @PostMapping("/eliminar")
-    public RedirectView eliminar(@RequestParam String id) throws ExcepcionServicio {
+    @PostMapping("/eliminar/{id}")
+    public RedirectView eliminar(@PathVariable String id) throws ExcepcionServicio {
         editorialServicio.bajaEditorial(id);
+        return new RedirectView("/editoriales");
+    }
+    
+    @PostMapping("/habilitar/{id}")
+    public RedirectView habilitar(@PathVariable String id) throws ExcepcionServicio {
+        editorialServicio.altaEditorial(id);
         return new RedirectView("/editoriales");
     }
 }

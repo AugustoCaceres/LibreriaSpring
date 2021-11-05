@@ -35,10 +35,10 @@
                 <td class="col-md-3 px-md-2 text-center d-flex justify-content-around w-100">
                     <a class="btn btn-secondary btn-sm" th:href="@{/autores/editar/__${autor.id}__}">Editar</a>
                     <form method = "POST" th:action="${autor.alta} ? @{/autores/eliminar/__${autor.id}__} :
-                    @{autores/habilitar/__${autor.id}__}">
-                    <button th:class="${autor.alta} ? 'btn btn-danger btn-sm' : 'btn btn-primary btn-sm'"
-                    type="submit" th:text="${autor.alta} ? 'Eliminar' : 'Habilitar'"></button>
-                </form>
+                        @{autores/habilitar/__${autor.id}__}">
+                        <button th:class="${autor.alta} ? 'btn btn-danger btn-sm' : 'btn btn-primary btn-sm'"
+                        type="submit" th:text="${autor.alta} ? 'Eliminar' : 'Habilitar'"></button>
+                    </form>
                 </td>
             </tr>
         </tbody>

@@ -53,8 +53,8 @@ public class LibroControlador {
     public ModelAndView modificarLibro(@PathVariable String id) throws ExcepcionServicio {
         ModelAndView mav = new ModelAndView("libro-formulario");
         mav.addObject("libro", libroServicio.obtenerLibroPorId(id));
-        mav.addObject("autor", autorServicio.obtenerAutores());
-        mav.addObject("editorial", editorialServicio.obtenerEditoriales());
+        mav.addObject("autores", autorServicio.obtenerAutores());
+        mav.addObject("editoriales", editorialServicio.obtenerEditoriales());
         mav.addObject("title", "Editar libro");
         mav.addObject("action", "modificar");
         return mav;
@@ -71,14 +71,23 @@ public class LibroControlador {
     @PostMapping("/modificar")
     public RedirectView editar(@RequestParam String id, @RequestParam Long isbn, @RequestParam String titulo, 
             @RequestParam Integer anio, @RequestParam Integer ejemplares,
-            @RequestParam Integer ejemplaresPrestados) throws ExcepcionServicio {
-        libroServicio.modificarLibro(id, isbn, titulo,  anio, ejemplares, ejemplaresPrestados);
+            @RequestParam Integer ejemplaresPrestados, @RequestParam ("autor") String autorId, @RequestParam ("editorial") String editorialId// 
+    ) 
+            throws ExcepcionServicio {
+        libroServicio.modificarLibro(id, isbn, titulo,  anio, ejemplares, ejemplaresPrestados, autorId, editorialId
+        );
         return new RedirectView("/libros");
     }
     
-    @PostMapping("/eliminar")
-    public RedirectView eliminar(@RequestParam String id) throws ExcepcionServicio {
+    @PostMapping("/eliminar/{id}")
+    public RedirectView eliminar(@PathVariable String id) throws ExcepcionServicio {
         libroServicio.bajaLibro(id);
+        return new RedirectView("/libros");
+    }
+    
+    @PostMapping("/habilitar/{id}")
+    public RedirectView habilitar(@PathVariable String id) throws ExcepcionServicio {
+        libroServicio.altaLibro(id);
         return new RedirectView("/libros");
     }
     

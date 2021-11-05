@@ -23,7 +23,7 @@ public class Libro {
     @ManyToOne
     private Autor autor;
     @ManyToOne
-    Editorial editorial;
+    private Editorial editorial;
 
     public Libro() {
     }

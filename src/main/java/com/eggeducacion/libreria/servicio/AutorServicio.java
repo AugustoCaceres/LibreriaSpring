@@ -71,7 +71,7 @@ public class AutorServicio {
         }
     }
     
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public List<Autor> obtenerAutores(){
         return repositorio.findAll();
     }

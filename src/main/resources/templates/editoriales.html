@@ -14,7 +14,7 @@
 <nav th:replace="fragment :: navbar"></nav>
 
 <div class="container">
-    <h2 class="ms-5">Listado de autores</h2>
+    <h2 class="ms-5">Listado de editoriales</h2>
     <div th:if=${editoriales.isEmpty()}>
         <p class="ms-5 fs-5">Todavia no hay editoriales cargados. <a th:href="@{/editoriales/crear}">Crear</a></p>
     </div>
@@ -31,6 +31,14 @@
             <tr th:each="editorial : ${editoriales}">
                 <th class="col-md-1 px-md-2 text-center" scope="row" th:text="${editorial.id}"></th>
                 <td class="col-md-3 px-md-2 text-center" th:text="${editorial.nombre}"></td>
+                <td class="col-md-3 px-md-2 text-center d-flex justify-content-around w-100">
+                    <a class="btn btn-secondary btn-sm" th:href="@{/editoriales/editar/__${editorial.id}__}">Editar</a>
+                    <form method = "POST" th:action="${editorial.alta} ? @{/editoriales/eliminar/__${editorial.id}__} :
+                        @{/editoriales/habilitar/__${editorial.id}__}">
+                        <button th:class="${editorial.alta} ? 'btn btn-danger btn-sm' : 'btn btn-primary btn-sm'"
+                        type="submit" th:text="${editorial.alta} ? 'Eliminar' : 'Habilitar'"></button>
+                    </form>
+                </td>
             </tr>
         </tbody>
     </table>

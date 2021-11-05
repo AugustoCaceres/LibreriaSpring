@@ -49,10 +49,12 @@ public class LibroServicio {
     }
     
     @Transactional
-    public void modificarLibro (String id,  Long isbn, String titulo,  Integer anio, Integer ejemplares, Integer ejemplaresPrestados)throws ExcepcionServicio{
+    public void modificarLibro (String id,  Long isbn, String titulo,  Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
+            String autorId, String editorialId)throws ExcepcionServicio{
         validarDatos(isbn, titulo, anio, ejemplares, ejemplaresPrestados);
 
         Optional<Libro> l = repositorio.findById(id);
+        
         if(l.isPresent()){
             Libro libro = l.get();
             
@@ -62,6 +64,8 @@ public class LibroServicio {
             libro.setEjemplares(ejemplares);
             libro.setEjemplaresPrestados(ejemplaresPrestados);
             libro.setEjemplaresRestantes(libro.getEjemplares()-libro.getEjemplaresPrestados());
+            libro.setAutor(autorRepositorio.findById(autorId).orElse(null));
+            libro.setEditorial(editorialRepositorio.findById(editorialId).orElse(null));
             
             repositorio.save(libro);
         } else {
@@ -104,14 +108,16 @@ public class LibroServicio {
     
     @Transactional(readOnly=true)
     public Libro obtenerLibroPorId(String id) throws ExcepcionServicio{
-        Optional<Libro> l = repositorio.findById(id);
-        
-        if(l.isPresent()){
-            Libro libro = l.get();
-            return libro;
-        } else {
-            throw new ExcepcionServicio("Ese libro no se encuentra en la base de datos.");
-        }
+          return repositorio.findById(id).orElse(null);
+
+//        Optional<Libro> l = repositorio.findById(id);
+//        
+//        if(l.isPresent()){
+//            Libro libro = l.get();
+//            return libro;
+//        } else {
+//            throw new ExcepcionServicio("Ese libro no se encuentra en la base de datos.");
+//        }
     }
     
     public void validarDatos(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados) throws ExcepcionServicio {
@@ -126,7 +132,7 @@ public class LibroServicio {
             throw new ExcepcionServicio("Debe ingresar un titulo válido.");
         }
         
-        if(anio > anioActual){
+        if(anio > anioActual || anio == null){
             throw new ExcepcionServicio("Debe ingresar un año válido.");
         }
         

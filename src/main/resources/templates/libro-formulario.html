@@ -13,50 +13,59 @@
 <body class="bg-light">
     <nav th:replace = "fragment :: navbar"></nav>
 
-    <div class="container mt-5 main">
-    <h1 th:text="${title}"></h1>
-    <hr class="mb-5 col-xl-12"/>
-    <form autocomplete="off" class="needs-validation" id="formulario" method="POST" novalidate
-            th:action="@{/libros/__${action}__}" th:object=${libro}>
-            <div class="form-floating mb-3 col-xl-6">
+    <div class="container mt-1 main">
+        <h1 th:text="${title}"></h1>
+        <hr class="mb-2 col-xl-12"/>
+        <form autocomplete="off" class="needs-validation" id="formulario" method="POST" novalidate
+                th:action="@{/libros/__${action}__}" th:object=${libro}>
+            
+            <input th:field="*{id}" type="hidden" />
+            
+            <div class="form-floating mb-2 col-xl-6">
                 <input class="form-control" id="isbn" placeholder="isbn" required th:field="*{isbn}" 
                         type="text"/>
                 <label for="isbn">ISBN</label>
                     <div class="invalid-feedback">El ISBN es obligatorio</div>
             </div>
-            <div class="form-floating mb-3 col-xl-6">
+            
+            <div class="form-floating mb-2 col-xl-6">
                 <input class="form-control" id="titulo" placeholder="Título" required th:field="*{titulo}" 
                         type="text"/>
                 <label for="titulo">Título</label>
                     <div class="invalid-feedback">El título es obligatorio</div>
             </div>
-            <div class="form-floating mb-3 col-xl-6">
+
+            <div class="form-floating mb-2 col-xl-6">
                 <input class="form-control" id="anio" placeholder="Año" required th:field="*{anio}" 
                         type="number"/>
                 <label for="anio">Año</label>
                     <div class="invalid-feedback">El año es obligatorio</div>
             </div>
-            <div class="form-floating mb-3 col-xl-6">
+            
+            <div class="form-floating mb-2 col-xl-6">
                 <input class="form-control" id="ejemplares" placeholder="Ejemplares" required th:field="*{ejemplares}" 
                         type="number"/>
                 <label for="ejemplares">Ejemplares</label>
                     <div class="invalid-feedback">Los ejemplares son obligatorios</div>
             </div>
-            <div class="form-floating mb-3 col-xl-6">
+            
+            <div class="form-floating mb-2 col-xl-6">
                 <input class="form-control" id="ejemplaresPrestados" placeholder="Ejemplares prestados" 
                 required th:field="*{ejemplaresPrestados}" 
                         type="number"/>
                 <label for="ejemplaresRestantes">Ejemplares Prestados</label>
                     <div class="invalid-feedback">Los ejemplares prestados son obligatorios</div>
             </div>
-            <div class="form-floating  mb-3 col-xl-6">
+            
+            <div class="form-floating  mb-2 col-xl-6">
                 <select aria-label="Elegir autor" class="form-select" id="autor" th:field="*{autor}">
                     <option selected value="">Elegir autor</option>
                     <option th:each="autor : ${autores}" th:text="|${autor.nombre}|" th:value="${autor.id}"></option>
                 </select>
                 <label for="autor">Autor</label>
             </div> 
-            <div class="form-floating  mb-3 col-xl-6">
+            
+            <div class="form-floating  mb-2 col-xl-6">
                 <select aria-label="Elegir editorial" class="form-select" id="editorial" th:field="*{editorial}">
                     <option selected value="">Elegir editorial</option>
                     <option th:each="editorial :${editoriales}" th:text="|${editorial.nombre}|" 
@@ -64,13 +73,16 @@
                 </select>
                 <label for="editorial">Editorial</label>
             </div> 
+            
             <div class="row">
                 <div class="col-xl-3">
-                    <button class="btn btn-success" th:text="${action == 'guardar'} ? 'Crear libro' : 'Guardar cambios'"
-                            type="submit"></button>
+                    <button class="btn btn-success mb-2" th:text="${action == 'guardar'} ? 'Crear libro' : 'Guardar cambios'"
+                            type="submit">
+                    </button>
                 </div>
             </div>
-    </form>
+
+        </form>
     </div>
 
     <footer th:replace = "fragment :: footer"></footer>

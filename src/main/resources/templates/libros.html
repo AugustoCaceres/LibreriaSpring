@@ -46,6 +46,14 @@
                     <td class="col-md-3 px-md-2 text-center" th:text="${libro.autor.nombre}"></td>
                     <td class="col-md-3 px-md-2 text-center" th:text="${libro.editorial.nombre}"></td>
                     <td class="col-md-3 px-md-2 text-center" th:text="${libro.alta}"></td>
+                    <td class="col-md-3 px-md-2 text-center d-flex justify-content-around w-100">
+                        <a class="btn btn-secondary btn-sm" th:href="@{/libros/editar/__${libro.id}__}">Editar</a>
+                        <form method = "POST" th:action="${libro.alta} ? @{/libros/eliminar/__${libro.id}__} :
+                            @{libros/habilitar/__${libro.id}__}">
+                            <button th:class="${libro.alta} ? 'btn btn-danger btn-sm' : 'btn btn-primary btn-sm'"
+                            type="submit" th:text="${libro.alta} ? 'Eliminar' : 'Habilitar'"></button>
+                        </form>
+                    </td>
                 </tr>
             </tbody>
         </table>

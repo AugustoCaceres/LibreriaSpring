@@ -50,6 +50,20 @@ public class EditorialServicio {
         }
     }
     
+    @Transactional
+    public void altaEditorial(String id) throws ExcepcionServicio{
+        Optional<Editorial> e = repositorio.findById(id);
+        
+        if(e.isPresent()){
+            Editorial editorial = e.get();
+            editorial.setAlta(Boolean.TRUE);
+            
+            repositorio.save(editorial);
+        } else {
+            throw new ExcepcionServicio("Esa editorial no se encuentra en la base de datos.");
+        }
+    }
+    
     @Transactional(readOnly=true)
     public List<Editorial> obtenerEditoriales(){
         return repositorio.findAll();
@@ -57,13 +71,15 @@ public class EditorialServicio {
     
     @Transactional(readOnly=true)
     public Editorial obtenerEditorialPorId(String id) throws ExcepcionServicio{
-        Optional<Editorial> e = repositorio.findById(id);
-        if (e.isPresent()){
-            Editorial editorial = e.get();
-            return editorial;
-        } else {
-            throw new ExcepcionServicio("Esa editorial no está en la base de datos.");
-        }
+        
+        return repositorio.findById(id).orElse(null);
+//        Optional<Editorial> e = repositorio.findById(id);
+//        if (e.isPresent()){
+//            Editorial editorial = e.get();
+//            return editorial;
+//        } else {
+//            throw new ExcepcionServicio("Esa editorial no está en la base de datos.");
+//        }
     }
     
     private void validarDatos(String nombre) throws ExcepcionServicio {

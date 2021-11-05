@@ -18,25 +18,32 @@
     <hr class="mb-5 col-xl-12"/>
     <form autocomplete="off" class="needs-validation" id="formulario" method="POST" novalidate
         th:action="@{/autores/__${action}__}" th:object=${autor}>
+
+        <input th:field="*{id}" type="hidden" />
+
         <div class="form-floating mb-3 col-xl-6">
             <input class="form-control" id="nombre" placeholder="Nombre" required th:field="*{nombre}" 
                     type="text"/>
             <label for="nombre">Nombre</label>
                 <div class="invalid-feedback">El nombre es obligatorio</div>
         </div>
-        <div class="form-floating mb-3 col-xl-6">
-            <input class="form-control" id="documento" placeholder="Id" required th:field="*{id}"
+
+    <!--    <div class="form-floating mb-3 col-xl-6">
+            <input class="form-control" id="id" placeholder="Id" required th:field="*{id}"
                    th:readonly="${autor.id}"
                    type="text"/>
-            <label for="documento">Id</label>
-            <div class="invalid-feedback">El id es obligatorio</div>
+            <label for="id">Id</label>
         </div>
+    -->
+
         <div class="row">
             <div class="col-xl-3">
-                <button class="btn btn-success" th:text="${action == 'guardar'} ? 'Crear autor' : 'Guardar cambios'"
-                        type="submit"></button>
+                <button class="btn btn-success mt-1" th:text="${action == 'guardar'} ? 'Crear autor' : 'Guardar cambios'"
+                        type="submit">
+                </button>
             </div>
         </div>
+
     </form>
 </div>
 
