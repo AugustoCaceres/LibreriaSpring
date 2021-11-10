@@ -1,7 +1,6 @@
 package com.eggeducacion.libreria.servicio;
 
 import com.eggeducacion.libreria.entidad.Autor;
-import com.eggeducacion.libreria.excepcion.ExcepcionServicio;
 import com.eggeducacion.libreria.repositorio.AutorRepositorio;
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +15,7 @@ public class AutorServicio {
     private AutorRepositorio repositorio;
     
     @Transactional
-    public void cargarAutor(String nombre) throws ExcepcionServicio {
+    public void cargarAutor(String nombre) throws Exception{
         validarDatos(nombre);
         
         Autor autor = new Autor();
@@ -27,7 +26,7 @@ public class AutorServicio {
     }
     
     @Transactional
-    public void modificarAutor(String id, String nombre) throws ExcepcionServicio{
+    public void modificarAutor(String id, String nombre) throws Exception{
         validarDatos(nombre);
         
         Optional<Autor> a = repositorio.findById(id);
@@ -36,38 +35,38 @@ public class AutorServicio {
             autor.setNombre(nombre);
             repositorio.save(autor);
         } else {
-            throw new ExcepcionServicio("No se encuentra ese autor en la base de datos");
+            throw new Exception("No se encuentra ese autor en la base de datos");
         } 
     }
             
     
     @Transactional
-    public void bajaAutor(String id) throws ExcepcionServicio {
+    public void bajaAutor(String id) throws Exception{
         Optional<Autor> a = repositorio.findById(id);
         if (a.isPresent()){
             Autor autor = a.get();
             if(autor.getAlta().equals(false)){
-                throw new ExcepcionServicio("Ese autor ya estaba dado de baja.");
+                throw new Exception("Ese autor ya estaba dado de baja.");
             }
             autor.setAlta(false);
             repositorio.save(autor);
         } else {
-            throw new ExcepcionServicio("Ese autor no se encuentra en la base de datos.");
+            throw new Exception("Ese autor no se encuentra en la base de datos.");
         }
     }
     
     @Transactional
-    public void altaAutor(String id) throws ExcepcionServicio {
+    public void altaAutor(String id) throws Exception{
         Optional<Autor> a = repositorio.findById(id);
         if (a.isPresent()){
             Autor autor = a.get();
             if(autor.getAlta().equals(true)){
-                throw new ExcepcionServicio("Ese autor ya estaba dado de alta.");
+                throw new Exception("Ese autor ya estaba dado de alta.");
             }
             autor.setAlta(true);
             repositorio.save(autor);
         } else {
-            throw new ExcepcionServicio("Ese autor no se encuentra en la base de datos.");
+            throw new Exception("Ese autor no se encuentra en la base de datos.");
         }
     }
     
@@ -77,7 +76,7 @@ public class AutorServicio {
     }
     
     @Transactional(readOnly=true)
-    public Autor obtenerAutorPorId(String id) throws ExcepcionServicio{
+    public Autor obtenerAutorPorId(String id) throws Exception{
         return repositorio.findById(id).orElse(null);
 //        Optional<Autor> a = repositorio.findById(id);
 //        if(a.isPresent()){
@@ -88,9 +87,9 @@ public class AutorServicio {
 //        }
     }
     
-    private void validarDatos(String nombre) throws ExcepcionServicio {
+    private void validarDatos(String nombre) throws Exception{
         if (nombre == null || nombre.isEmpty()){
-            throw new ExcepcionServicio("Debe ingresar un nombre válido.");
+            throw new Exception("Debe ingresar un nombre válido.");
         }
     }
 }

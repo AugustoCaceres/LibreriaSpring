@@ -1,7 +1,6 @@
 package com.eggeducacion.libreria.servicio;
 
 import com.eggeducacion.libreria.entidad.Editorial;
-import com.eggeducacion.libreria.excepcion.ExcepcionServicio;
 import com.eggeducacion.libreria.repositorio.EditorialRepositorio;
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +15,7 @@ public class EditorialServicio {
     private EditorialRepositorio repositorio;
     
     @Transactional
-    public void ingresarEditorial(String nombre) throws ExcepcionServicio{
+    public void ingresarEditorial(String nombre) throws Exception{
         Editorial editorial = new Editorial();
         validarDatos(nombre);
         editorial.setNombre(nombre);
@@ -25,7 +24,7 @@ public class EditorialServicio {
     }
     
     @Transactional
-    public void modificarEditorial(String id, String nombre) throws ExcepcionServicio {
+    public void modificarEditorial(String id, String nombre) throws Exception{
         validarDatos(nombre);
         Optional<Editorial> e = repositorio.findById(id);
         if (e.isPresent()){
@@ -33,12 +32,12 @@ public class EditorialServicio {
             editorial.setNombre(nombre);
             repositorio.save(editorial);
         } else {
-            throw new ExcepcionServicio("Esa editorial no se encuentra en la base de datos.");
+            throw new Exception("Esa editorial no se encuentra en la base de datos.");
         }
     }
     
     @Transactional
-    public void bajaEditorial(String id) throws ExcepcionServicio {
+    public void bajaEditorial(String id) throws Exception{
         
         Optional<Editorial> e = repositorio.findById(id);
         if (e.isPresent()){
@@ -46,12 +45,12 @@ public class EditorialServicio {
             editorial.setAlta(false);
             repositorio.save(editorial);
         } else {
-            throw new ExcepcionServicio("Esa editorial no se encuentra en la base de datos.");
+            throw new Exception("Esa editorial no se encuentra en la base de datos.");
         }
     }
     
     @Transactional
-    public void altaEditorial(String id) throws ExcepcionServicio{
+    public void altaEditorial(String id) throws Exception{
         Optional<Editorial> e = repositorio.findById(id);
         
         if(e.isPresent()){
@@ -60,7 +59,7 @@ public class EditorialServicio {
             
             repositorio.save(editorial);
         } else {
-            throw new ExcepcionServicio("Esa editorial no se encuentra en la base de datos.");
+            throw new Exception("Esa editorial no se encuentra en la base de datos.");
         }
     }
     
@@ -70,7 +69,7 @@ public class EditorialServicio {
     }
     
     @Transactional(readOnly=true)
-    public Editorial obtenerEditorialPorId(String id) throws ExcepcionServicio{
+    public Editorial obtenerEditorialPorId(String id) throws Exception{
         
         return repositorio.findById(id).orElse(null);
 //        Optional<Editorial> e = repositorio.findById(id);
@@ -82,9 +81,9 @@ public class EditorialServicio {
 //        }
     }
     
-    private void validarDatos(String nombre) throws ExcepcionServicio {
+    private void validarDatos(String nombre) throws Exception {
         if (nombre == null || nombre.isEmpty()){
-            throw new ExcepcionServicio("El nombre ingresado es inválido.");
+            throw new Exception("El nombre ingresado es inválido.");
         }
     }
 }

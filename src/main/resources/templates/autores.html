@@ -16,6 +16,8 @@
     
 <div class="container">
     <h2 class="ms-5">Listado de autores</h2>
+    <div class="alert alert-succes" th:if="${exito}" th:text="${exito}"></div>
+    <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
     <div th:if=${autores.isEmpty()}>
         <p class="ms-5 fs-5">Todavia no hay autores cargados. <a th:href="@{/autores/crear}">Crear</a></p>
     </div>

@@ -1,5 +1,6 @@
 package com.eggeducacion.libreria.entidad;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,10 +14,15 @@ public class Libro {
     @GeneratedValue(generator="uuid")
     @GenericGenerator(name="uuid", strategy="uuid2")
     private String id;
+    @Column(nullable = false) 
     private Long isbn;
+    @Column(nullable = false) 
     private String titulo;
+    @Column(nullable = false) 
     private Integer anio;
+    @Column(nullable = false) 
     private Integer ejemplares;
+    @Column(nullable = false) 
     private Integer ejemplaresPrestados;
     private Integer ejemplaresRestantes;
     private Boolean alta;
