@@ -3,6 +3,7 @@ package com.eggeducacion.libreria.servicio;
 import com.eggeducacion.libreria.entidad.Autor;
 import com.eggeducacion.libreria.entidad.Editorial;
 import com.eggeducacion.libreria.entidad.Libro;
+import com.eggeducacion.libreria.excepciones.MiExcepcion;
 import com.eggeducacion.libreria.repositorio.AutorRepositorio;
 import com.eggeducacion.libreria.repositorio.EditorialRepositorio;
 import com.eggeducacion.libreria.repositorio.LibroRepositorio;
@@ -26,7 +27,7 @@ public class LibroServicio {
     private EditorialRepositorio editorialRepositorio;
     
     @Transactional
-    public void ingresarLibro(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados, String autorId, String editorialId) throws Exception{
+    public void ingresarLibro(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados, String autorId, String editorialId) throws MiExcepcion{
         
         validarDatos(isbn, titulo, anio, ejemplares, ejemplaresPrestados);
         
@@ -49,7 +50,7 @@ public class LibroServicio {
     
     @Transactional
     public void modificarLibro (String id,  Long isbn, String titulo,  Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
-            String autorId, String editorialId)throws Exception{
+            String autorId, String editorialId)throws MiExcepcion{
         validarDatos(isbn, titulo, anio, ejemplares, ejemplaresPrestados);
 
         Optional<Libro> l = repositorio.findById(id);
@@ -68,12 +69,12 @@ public class LibroServicio {
             
             repositorio.save(libro);
         } else {
-            throw new Exception("Ese libro no se encuentra en la base de datos.");
+            throw new MiExcepcion("Ese libro no se encuentra en la base de datos.");
         }
     }
     
     @Transactional
-    public void bajaLibro(String id) throws Exception{
+    public void bajaLibro(String id) throws MiExcepcion{
         Optional<Libro> l = repositorio.findById(id);
         
         if(l.isPresent()){
@@ -82,12 +83,12 @@ public class LibroServicio {
             
             repositorio.save(libro);
         } else {
-            throw new Exception("Ese libro no se encuentra en la base de datos.");
+            throw new MiExcepcion("Ese libro no se encuentra en la base de datos.");
         }
     }
     
     @Transactional
-    public void altaLibro(String id) throws Exception{
+    public void altaLibro(String id) throws MiExcepcion{
         Optional<Libro> l = repositorio.findById(id);
         
         if(l.isPresent()){
@@ -96,7 +97,7 @@ public class LibroServicio {
             
             repositorio.save(libro);
         } else {
-            throw new Exception("Ese libro no se encuentra en la base de datos.");
+            throw new MiExcepcion("Ese libro no se encuentra en la base de datos.");
         }
     }
     
@@ -119,28 +120,28 @@ public class LibroServicio {
 //        }
     }
     
-    public void validarDatos(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados) throws Exception {
+    public void validarDatos(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados) throws MiExcepcion {
         Calendar c = Calendar.getInstance();
         int anioActual = c.get(Calendar.YEAR);
         
         if (isbn == 0){
-            throw new Exception("Debe ingresar un isbn valido.");
+            throw new MiExcepcion("Debe ingresar un isbn valido.");
         }
         
         if(titulo == null || titulo.isEmpty()){
-            throw new Exception("Debe ingresar un titulo válido.");
+            throw new MiExcepcion("Debe ingresar un titulo válido.");
         }
         
         if(anio > anioActual || anio == null){
-            throw new Exception("Debe ingresar un año válido.");
+            throw new MiExcepcion("Debe ingresar un año válido.");
         }
         
         if(ejemplares < 0){
-            throw new Exception("Debe ingresar cantidad válida de ajemplares.");
+            throw new MiExcepcion("Debe ingresar cantidad válida de ajemplares.");
         }
         
         if(ejemplaresPrestados > ejemplares){
-            throw new Exception("La cantidad de ejemplares prestados no puede ser mayor que la ejemplares totales.");
+            throw new MiExcepcion("La cantidad de ejemplares prestados no puede ser mayor que la ejemplares totales.");
         }
         
     }

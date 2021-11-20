@@ -38,7 +38,19 @@
                         <li><a class="dropdown-item" th:href="@{/libros/crear}">Agregar libros</a></li>
                     </ul>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"  
+                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Usuario</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" th:href="@{/usuario}">Mostrar usuarios</a></li>
+                        <li><a class="dropdown-item" th:href="@{/usuario/crear}">Agregar usuario</a></li>
+                    </ul>
+                </li>
             </ul>
+            <div class="text-end">
+                <a class="btn btn-light" th:href="@{/logout}">Finalizar sesión</a>
+            </div>
         </div>
 </nav>
 

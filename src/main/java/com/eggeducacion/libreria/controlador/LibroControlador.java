@@ -3,6 +3,7 @@ package com.eggeducacion.libreria.controlador;
 import com.eggeducacion.libreria.entidad.Autor;
 import com.eggeducacion.libreria.entidad.Editorial;
 import com.eggeducacion.libreria.entidad.Libro;
+import com.eggeducacion.libreria.excepciones.MiExcepcion;
 import com.eggeducacion.libreria.servicio.AutorServicio;
 import com.eggeducacion.libreria.servicio.EditorialServicio;
 import com.eggeducacion.libreria.servicio.LibroServicio;
@@ -60,7 +61,7 @@ public class LibroControlador {
     }
     
     @GetMapping("/editar/{id}")
-    public ModelAndView modificarLibro(@PathVariable String id) throws Exception{
+    public ModelAndView modificarLibro(@PathVariable String id) throws MiExcepcion{
         ModelAndView mav = new ModelAndView("libro-formulario");
         mav.addObject("libro", libroServicio.obtenerLibroPorId(id));
         mav.addObject("autores", autorServicio.obtenerAutores());
@@ -77,7 +78,7 @@ public class LibroControlador {
         try {
             libroServicio.ingresarLibro(isbn, titulo, anio, ejemplares, ejemplaresPrestados, autorId, editorialId);
             attributes.addFlashAttribute("exito", "El libro se ha creado exitosamente.");
-        } catch (Exception e){
+        } catch (MiExcepcion e){
             attributes.addFlashAttribute("error", e.getMessage());
             //return new RedirectView("/libros/crear");
         }
@@ -88,24 +89,24 @@ public class LibroControlador {
     public RedirectView editar(@RequestParam String id, @RequestParam Long isbn, @RequestParam String titulo, 
             @RequestParam Integer anio, @RequestParam Integer ejemplares,
             @RequestParam Integer ejemplaresPrestados, @RequestParam ("autor") String autorId, @RequestParam ("editorial") String editorialId, 
-            RedirectAttributes attributes) throws Exception {
+            RedirectAttributes attributes) throws MiExcepcion {
         try {
             libroServicio.modificarLibro(id, isbn, titulo,  anio, ejemplares, ejemplaresPrestados, autorId, editorialId);
             attributes.addFlashAttribute("exito", "El libro se modificó correctamente!");
-        } catch (Exception e){
+        } catch (MiExcepcion e){
             attributes.addFlashAttribute("error", e.getMessage());
         }
         return new RedirectView("/libros");
     }
     
     @PostMapping("/eliminar/{id}")
-    public RedirectView eliminar(@PathVariable String id) throws Exception {
+    public RedirectView eliminar(@PathVariable String id) throws MiExcepcion {
         libroServicio.bajaLibro(id);
         return new RedirectView("/libros");
     }
     
     @PostMapping("/habilitar/{id}")
-    public RedirectView habilitar(@PathVariable String id) throws Exception {
+    public RedirectView habilitar(@PathVariable String id) throws MiExcepcion {
         libroServicio.altaLibro(id);
         return new RedirectView("/libros");
     }
