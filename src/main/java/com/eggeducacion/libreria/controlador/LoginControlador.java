@@ -71,6 +71,7 @@ public class LoginControlador {
         RedirectView redirectView = new RedirectView("/login");
         
         try {
+            //usuarioServicio.crear(usuario.getNombre(), usuario.getApellido(), usuario.getCorreo(), usuario.getClave(), usuario.getRol());
             usuarioServicio.crear(usuario);
             request.login(usuario.getCorreo(), usuario.getClave());
         } catch (MiExcepcion e){

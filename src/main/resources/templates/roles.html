@@ -15,34 +15,35 @@
 <nav th:replace="fragment :: navbar"></nav>
     
 <div class="container">
-    <h2 class="ms-5 text-center">Listado de autores</h2>
+    <h2 class="ms-5 text-center">Listado de roles</h2>
     <div class="alert alert-succes" th:if="${exito}" th:text="${exito}"></div>
     <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
-    <div th:if=${autores.isEmpty()}>
-        <p class="ms-5 fs-5">Todavia no hay autores cargados. <a th:href="@{/autores/crear}">Crear</a></p>
+    <div th:if=${roles.isEmpty()}>
+        <p class="ms-5 fs-5">Todavia no hay roles cargados. <a th:href="@{/rol/crear}">Crear</a></p>
     </div>
 </div>
-<div class="table-responsive m-5" th:unless="${autores.isEmpty()}">
+<div class="table-responsive m-5" th:unless="${roles.isEmpty()}">
     <table class="table table-hover table-sm table-bordered">
         <thead class="table-dark text-center">
             <tr>
-                <th class="col-md-2 ps-2" scope="col">ID</th>
-                <th class="col-md-3 ps-2" scope="col">Nombre</th>
-                <th class="col-md-3 ps-2" scope="col">Acciones</th>
+                <th class="col-md-1 ps-2" scope="col">ID</th>
+                <th class="col-md-1 ps-2" scope="col">Nombre</th>
+                <th class="col-md-1 ps-2" scope="col">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="autor : ${autores}">
-                <th class="col-md-2 px-md-2 text-center" scope="row" th:text="${autor.id}"></th>
-                <td class="col-md-3 px-md-2 text-center" th:text="${autor.nombre}"></td>
-                <td class="col-md-3 px-md-2 text-center d-flex justify-content-around w-100">
-                    <a class="btn btn-secondary btn-sm" th:href="@{/autores/editar/__${autor.id}__}">Editar</a>
-                    <form method = "POST" th:action="${autor.alta} ? @{/autores/eliminar/__${autor.id}__} :
-                        @{autores/habilitar/__${autor.id}__}">
-                        <button th:class="${autor.alta} ? 'btn btn-danger btn-sm' : 'btn btn-primary btn-sm'"
-                        type="submit" th:text="${autor.alta} ? 'Eliminar' : 'Habilitar'"></button>
-                    </form>
-                </td>
+            <tr th:each="rol : ${roles}">
+                <th class="col-md-1 px-md-2 text-center" scope="row" th:text="${rol.id}"></th>
+                <td class="col-md-3 px-md-2 text-center" th:text="${rol.nombre}"></td>
+                <td class="col md-2">
+                        <div class="d-flex justify-content-around" sec:authorize="hasRole('SUPER-ADMIN')">
+                            <form method="POST" th:action="@{/rol/eliminar/__${rol.id}__}">
+                                <button th:class="'btn btn-danger btn-sm'"
+                                type="submit" th:text="'Eliminar'">
+                                </button>
+                            </form>
+                        </div>
+                    </td>
             </tr>
         </tbody>
     </table>

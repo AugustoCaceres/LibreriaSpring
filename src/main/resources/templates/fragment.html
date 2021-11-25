@@ -38,13 +38,22 @@
                         <li><a class="dropdown-item" th:href="@{/libros/crear}">Agregar libros</a></li>
                     </ul>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" sec:authorize="hasAnyRole('ADMIN', 'SUPER-ADMIN')">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"  
                     role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Usuario</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <li><a class="dropdown-item" th:href="@{/usuario}">Mostrar usuarios</a></li>
                         <li><a class="dropdown-item" th:href="@{/usuario/crear}">Agregar usuario</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown" sec:authorize="hasAnyRole('ADMIN', 'SUPER-ADMIN')">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Roles</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" th:href="@{/rol}">Mostrar roles</a></li>
+                        <li sec:authorize="hasRole('SUPER-ADMIN')"><a class="dropdown-item" th:href="@{/rol/crear}">Agregar rol</a></li>
                     </ul>
                 </li>
             </ul>
@@ -54,7 +63,7 @@
         </div>
 </nav>
 
-<footer th:frgment="footer" class="footer py-3 bg-dark fixed-bottom">
+<footer th:frgment="footer" class="footer py-1 bg-dark fixed-bottom">
     <div class="container d-flex justify-content-center mt-2">
         <span class="text-muted">&copy; Augusto Cáceres - 2021</span>
     </div>

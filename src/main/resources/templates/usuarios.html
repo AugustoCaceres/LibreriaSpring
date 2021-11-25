@@ -17,20 +17,21 @@
         <div class="alert alert-success" th:if="${exito}" th:text="${exito}"></div>
         <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
 
-        <h1>Listado de usuarios</h1>
+        <h1 class="text-center">Listado de usuarios</h1>
 
         <hr class="mb-4"/>
         <div th:if="${usuarios.isEmpty()}">
-            <h5>Todavía no hay usuarios cargados. <a th:href="@{/usuario/crear}">Cargar usuario.</a></h5>
+            <h5>Todavía no hay usuarios cargados. <a th:href="@{/usuario/crear}">Cargar usuario</a></h5>
         </div>
         <div class="table-responsive" th:unless="${usuarios.isEmpty()}">
-            <a th:href="@{/usuario/crear}" class="btn btn-success mb-3">Cargar usuario.</a>
+            <a th:href="@{/usuario/crear}" class="btn btn-success mb-3">Cargar usuario</a>
             <table class="table table-hover table-bordered">
                 <thead class="table-dark text-center">
                     <tr>
                         <th class="col md-3">Nombre</th>
                         <th class="col md-3">Apellido</th>
                         <th class="col md-3">Correo</th>
+                        <th class="col md-2">Rol</th>
                         <th class="col md-3">Acciones</th>
                     </tr>
                 </thead>
@@ -39,9 +40,10 @@
                         <td class="col md-3" th:text="${usuario.nombre}"></td>
                         <td class="col md-3" th:text="${usuario.apellido}"></td>
                         <td class="col md-3" th:text="${usuario.correo}"></td>
+                        <td class="col md-2" th:text="${usuario.rol.nombre}"></td>
                         <td class="col md-2">
-                            <div class="d-flex justify-content-around">
-                                <a class="btn btn-warning btn-sm" th:href="@{usuario/editar/__${usuario.id}__}">Editar</a>
+                            <div class="d-flex justify-content-around" >
+                                <a sec:authorize="hasRole('SUPER-ADMIN')" class="btn btn-warning btn-sm" th:href="@{usuario/editar/__${usuario.id}__}">Editar</a>
                                 <form method="POST" th:action="${usuario.alta} ? @{/usuario/eliminar/__${usuario.id}__} : @{/usuario/habilitar/__${usuario.id}__}">
                                     <button th:class="${usuario.alta} ? 'btn btn-danger btn-sm' : 'btn btn-primary btn-sm'"
                                     type="submit" th:text="${usuario.alta} ? 'Eliminar' : 'Habilitar'">

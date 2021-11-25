@@ -2,10 +2,12 @@ package com.eggeducacion.libreria.controlador;
 
 import com.eggeducacion.libreria.entidad.Usuario;
 import com.eggeducacion.libreria.excepciones.MiExcepcion;
+import com.eggeducacion.libreria.servicio.RolServicio;
 import com.eggeducacion.libreria.servicio.UsuarioServicio;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,6 +26,9 @@ public class UsuarioControlador {
     @Autowired
     private UsuarioServicio usuarioServicio;
     
+    @Autowired
+    private RolServicio rolServicio;
+    
     @GetMapping
     public ModelAndView mostrar(HttpServletRequest request){
         ModelAndView mav = new ModelAndView("usuarios");
@@ -39,6 +44,7 @@ public class UsuarioControlador {
     }
     
     @GetMapping("/crear")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER-ADMIN')")
     public ModelAndView crear(HttpServletRequest request){
         ModelAndView mav = new ModelAndView("usuario-formulario");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
@@ -52,11 +58,13 @@ public class UsuarioControlador {
         
         mav.addObject("title", "Crear usuario");
         mav.addObject("action", "guardar");
+        mav.addObject("roles", rolServicio.buscarTodos());
         
         return mav;
     }
     
     @GetMapping("/editar/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER-ADMIN')")
     public ModelAndView modificar(@PathVariable Integer id, HttpServletRequest request, RedirectAttributes attributes){
         ModelAndView mav = new ModelAndView("usuario-formulario");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
@@ -71,6 +79,7 @@ public class UsuarioControlador {
             
             mav.addObject("title", "Modificar usuario");
             mav.addObject("action", "modificar");
+            mav.addObject("roles", rolServicio.buscarTodos());
         } catch (MiExcepcion e){
             attributes.addFlashAttribute("error", e.getMessage());
             mav.setViewName("redirect:/usuario");
@@ -83,6 +92,7 @@ public class UsuarioControlador {
         RedirectView redirectView = new RedirectView("/usuario");
         
         try {
+            //usuarioServicio.crear(usuario.getNombre(), usuario.getApellido(), usuario.getCorreo(), usuario.getClave(), usuario.getRol());
             usuarioServicio.crear(usuario);
             attributes.addFlashAttribute("exito", "La creación se ha realizado satisfactoriamente");
         } catch (MiExcepcion e){
@@ -95,6 +105,7 @@ public class UsuarioControlador {
     }
     
     @PostMapping("/modificar")
+    @PreAuthorize("hasRole('SUPER-ADMIN')")
     public RedirectView modificar(@ModelAttribute Usuario usuario, RedirectAttributes attributes){
         RedirectView redirectView = new RedirectView("/usuario");
         

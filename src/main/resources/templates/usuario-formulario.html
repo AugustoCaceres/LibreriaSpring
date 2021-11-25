@@ -13,7 +13,7 @@
 <body>
     <nav th:replace = "fragment :: navbar"></nav>
 
-    <div class="container mt-5 main">
+    <div class="container mt-5 mb-5 main">
         <h1 th:text="${title}"></h1>
         <hr class="mb-4 col-xl-12"/>
         <div class="alert alert-danger col-xl-6" th:if="${error}" th:text="${error}"></div>
@@ -45,11 +45,21 @@
                     <input class="form-control" id="clave" placeholder="Clave" th:field="*{clave}" type="password"/>
                     <label for="clave">Clave</label>
                     <div class="invalid-feedback">La clave es obligatoria.</div>
-                </div>
+            </div>
 
-            <div class="row">
+            <div class="form-floating mb-3 col-xl-6">
+                <select arial-label="Elegir rol" class="form-select" id="rol" th:field="*{rol}"	required>
+                    <option selected value="">Elegir rol</option>
+                    <option th:each="rol : ${roles}" th:text="${rol.nombre}"
+                        th:value="${rol.id}"></option>
+                </select>
+                <label for="rol">Rol</label>
+                <div class="invalid-feedback">El rol es obligatorio</div>
+            </div>            
+
+            <div class="row mb-3">
                 <div class="col-xl-3">
-                    <button class="btn btn-success" th:text="${action == 'guardar'} ? 'Crear usuario' : 'Guardar cambios'"
+                    <button class="btn btn-success mb-3" th:text="${action == 'guardar'} ? 'Crear usuario' : 'Guardar cambios'"
                     type="submit"></button>
                 </div>
             </div>

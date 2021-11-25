@@ -20,9 +20,9 @@
             <p class="ms-5 fs-5">Todavia no hay libros cargados. <a th:href="@{/libros/crear}">Crear</a></p>
         </div>
     </div>
-    <div class="table-responsive" th:unless="${libros.isEmpty()}">
+    <div class="table-responsive m-5" th:unless="${libros.isEmpty()}">
         <table class="table table-hover table-sm table-bordered m-2">
-            <thead class="table-secondary text-center">
+            <thead class="table-dark text-center">
                 <tr>
                     <th class="col-md-1 ps-2" scope="col">ID</th>
                     <th class="col-md-1 ps-2" scope="col">Titulo</th>
@@ -34,6 +34,7 @@
                     <th class="col-md-1 ps-2" scope="col">Autor</th>
                     <th class="col-md-1 ps-2" scope="col">Editorial</th>
                     <th class="col-md-1 ps-2" scope="col">Alta</th>
+                    <th class="col-md-1 ps-2" scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>

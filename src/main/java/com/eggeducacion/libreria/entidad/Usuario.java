@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Usuario {
@@ -23,6 +25,10 @@ public class Usuario {
     
     @Column(nullable = false)
     private String clave;
+    
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Rol rol;
     
     private boolean alta;
 
@@ -72,6 +78,14 @@ public class Usuario {
 
     public void setClave(String clave) {
         this.clave = clave;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
     @Override

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Crear rol</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body class="bg-light">
+    <div class="container mt-5 mb-5 main">
+        <h1>Crear rol</h1>
+        <form th:action="@{/rol/guardar}" method="POST">
+            <input type="text" name="nombre">
+            <input class="btn btn-success mt-1" type="submit">
+        </form>
+    </div>
+</body>
+</html>
